@@ -15,7 +15,7 @@ void draw_line(t_my_game* game, int x_end, int y_end, int color)
     dy = game->player.py;
     while(i < steps)
     {
-       my_pixel_put(game->img, dx, dy, color);
+       my_pixel_put(game->map_img, dx, dy, color);
         dx += xinc;
         dy += yinc;
         i++;

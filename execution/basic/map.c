@@ -33,8 +33,8 @@ void map_to_minimap(t_my_game* game, int px, int py)
     x_end = px + 60;
     y_end = py + 60;
     draw_map(game);
-    draw_player(game->img, 60, 60, 255);
-    //exit(0);
+    draw_player(game->map_img, px, py, 255);
+    draw_line(game, round(px + 20 * cos(game->player.rot)), round(py + 20 * sin(game->player.rot)), 255 << 16);
     while(y_start < y_end)
     {
         x_start = px - 60;

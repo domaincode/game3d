@@ -7,7 +7,7 @@
 #include "../minilibx-linux/mlx_int.h"
 
 
-#define HEIGHT 1200
+#define HEIGHT 600
 #define WIDTH  1200
 #define PLAYER_SIZE 8
 #define MAP_SIZE 32

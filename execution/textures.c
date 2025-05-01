@@ -1,4 +1,5 @@
 #include "game.h"
+
 void ft_textures_confg(double* offset_begin, double* offset_end, int projected_height)
 {
     if(*offset_begin < 0)

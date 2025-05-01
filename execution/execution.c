@@ -17,6 +17,10 @@ void game_key_hook_confg(t_my_game* game, int forward_steps, int right_steps, in
             game->player.px = x;
             game->player.py = y;
         }
+        else if(!check_wall(game, x, game->player.py))
+            game->player.px = x;
+        else if(!check_wall(game, game->player.px, y))
+            game->player.py = y;
     }
     else{
         x = round(game->player.px + forward_steps * cos(game->player.rot));
@@ -26,6 +30,10 @@ void game_key_hook_confg(t_my_game* game, int forward_steps, int right_steps, in
             game->player.px = x;
             game->player.py = y;
         }
+        else if(!check_wall(game, x, game->player.py))
+            game->player.px = x;
+        else if(!check_wall(game, game->player.px, y))
+            game->player.py = y;
     }
 }
 
