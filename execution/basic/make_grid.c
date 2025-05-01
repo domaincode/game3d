@@ -13,7 +13,7 @@ int make_grid(t_img* img, int color)
             if(x % 8 && y % 8)
                 my_pixel_put(img, x, y, color);
             else
-                my_pixel_put(img, x, y, 255 << 16);
+                my_pixel_put(img, x, y, 0);
             x++;
         }
         y++;

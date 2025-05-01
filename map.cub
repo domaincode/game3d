@@ -1,10 +1,10 @@
-NO textures/walls.xpm
-SO textures/walls.xpm
+NO textures/north.xpm
+SO textures/south.xpm
 WE textures/walls.xpm
 EA textures/walls.xpm
 
 F 60,30,10
-C 173,216,230
+C 0,0,0
 
 1111111111111111111111111
 1000000000000000000000001

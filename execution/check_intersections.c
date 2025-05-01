@@ -6,18 +6,14 @@ void choose_texture(t_my_game* game, int indice)
     if(indice == 1)
     {
         if(game->player.ray_angle >= 0 && game->player.ray_angle <= pi)
-        {
             game->test = game->south;
-        }
         else
             game->test = game->north;
     }
     else
     {
         if(game->player.ray_angle >= (pi / 2) && game->player.ray_angle <= (3 * pi / 2))
-        {
             game->test = game->west;
-        }
         else
             game->test = game->east;
     }
@@ -95,8 +91,6 @@ void check_intersections(t_my_game* game)
          distance_to_wall = check_vertical(game, distance_to_wall, &texture_x, &indice);
          choose_texture(game, indice);
           projected_wall_height = (fix_value / distance_to_wall);
-          if(projected_wall_height > HEIGHT)
-            projected_wall_height = HEIGHT;
         ft_textures(game, i * RES, texture_x % TILE_SIZE, projected_wall_height);
         //draw_line(game, texture_x, texture_y, 255 << 16);
         game->player.ray_angle  = normalize_angle(game->player.ray_angle + angle_increment);

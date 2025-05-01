@@ -8,9 +8,10 @@ int color(int r, int g, int b)
 void my_pixel_put(t_img* image, int x, int y, int color)
 {
     int offset;
-    if(x < 0 || y < 0 || x > WIDTH || y > HEIGHT)
+
+    if(x < 0 || y < 0 || x > image->width || y > image->height)
         return ;
-    offset = x * 4 + y *image->size_line;
+    offset = x * 4 + y * image->size_line;
     *(int* )(image->data + offset) = color;
 }
 
