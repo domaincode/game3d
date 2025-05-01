@@ -30,7 +30,7 @@ double check_horizontal(t_my_game* game, double distance_to_wall, int* texture_x
     ax = (((ay - game->player.py) / tan(ray_angle)) + game->player.px);
     while(ax >= 0 && ay >= 0 && ay < game->map.y_max && ax < game->map.x_max)
     {
-        if(check_wall(game, ax, ay))
+        if(check_wall(game, ax, ay) == 1)
         {
             *indice = 1;
             *texture_x = ax;
@@ -53,7 +53,7 @@ double check_vertical(t_my_game* game, double distance_to_wall, int* texture_x, 
     ay = ((ax - game->player.px) * tan(ray_angle)) + game->player.py;
     while(ax >= 0 && ay >= 0 && ay < game->map.y_max && ax < game->map.x_max)
     {
-        if(check_wall(game, ax, ay))
+        if(check_wall(game, ax, ay) == 1)
         {
             my_distance = (ax - game->player.px) * cos(game->player.rot) + (ay - game->player.py) * sin(game->player.rot);
             if(distance_to_wall == -1 || distance_to_wall > my_distance)
