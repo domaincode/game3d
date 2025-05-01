@@ -9,7 +9,8 @@
 
 #define HEIGHT 1200
 #define WIDTH  1200
-#define MAP_SIZE 8
+#define PLAYER_SIZE 8
+#define MAP_SIZE 32
 #define TILE_SIZE 32
 #define pi 3.14159265
 #define RES 1
@@ -56,6 +57,8 @@ typedef struct s_my_game
     int ceiling_color;
 
     t_img* img;
+    t_img* map_img;
+    t_img* mini_map_img;
     t_img* test;
 
     t_img* north;
@@ -65,10 +68,13 @@ typedef struct s_my_game
 
 } t_my_game;
 
+void map_to_minimap(t_my_game* game, int px, int py);
+
 int make_grid(t_img* img, int color);
 void draw_line(t_my_game* game, int x_end, int y_end, int color);
 void clor_ceiling_floor(t_my_game* game, int y_start, int y_end, int x_start, int color);
-void draw_square(t_img* image, int color, int posx, int posy, int surface);
+void draw_square(t_img* image, int posx, int posy, int color);
+void draw_player(t_img* image, int posx, int posy, int color);
 void draw_map(t_my_game* game);
 void ft_cast(t_my_game* game, int color);
 void draw_fov(t_my_game* game, int color);

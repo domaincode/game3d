@@ -58,15 +58,11 @@ int main(int ac, char **av)
     printf("East texture: %s\n", game->field->ea_tex.path);
     printf("Floor color: %d,%d,%d\n", game->field->floor.r, game->field->floor.g, game->field->floor.b);
     printf("Ceiling color: %d,%d,%d\n", game->field->ceilling.r, game->field->ceilling.g, game->field->ceilling.b);
-
-    //execution start
    
     
     ft_copy(&my_game, game);
     ft_execution(&my_game);
 
-    //ft_print(game->field->map->map);
-    //printf("width:%d\n", game->field->map->width);
     free(game->field->map);
     free(game->field);
     free(game);

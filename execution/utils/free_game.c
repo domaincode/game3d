@@ -7,6 +7,8 @@ int free_game(t_my_game* game, t_game* old_game)
     i = 0;
     mlx_destroy_image(game->co, game->img);
 
+    mlx_destroy_image(game->co, game->map_img);
+    
     mlx_destroy_image(game->co, game->north);
     mlx_destroy_image(game->co, game->south);
     mlx_destroy_image(game->co, game->west);

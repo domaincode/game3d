@@ -16,6 +16,7 @@ int cub_init(t_my_game* game)
     }
     game->win = mlx_new_window(game->co, WIDTH, HEIGHT, "WINDOW 1");
     game->img = mlx_new_image(game->co, WIDTH, HEIGHT);
+    game->map_img = mlx_new_image(game->co, game->map.cols * MAP_SIZE, game->map.rows * MAP_SIZE);
 
     // game->north = game->south = game->east = game->west = mlx_new_image(game->co, TILE_SIZE, TILE_SIZE);
     // make_grid(game->north, 255 );

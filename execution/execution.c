@@ -35,8 +35,8 @@ void draw_to_window(t_my_game* game)
 
     mlx_destroy_image(game->co, game->img);
     game->img = mlx_new_image(game->co, WIDTH, HEIGHT);
-    //draw_map(game);
     check_intersections(game);
+    map_to_minimap(game, game->player.px, game->player.py);
     //draw_square(game->img, 255 , game->player.px, game->player.py, 8);
     // ft_cast(game, 255 << 16);
     mlx_put_image_to_window(game->co, game->win, game->img, 0, 0);
