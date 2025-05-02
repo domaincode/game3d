@@ -2,7 +2,7 @@ NAME = cub3D
 RM	= rm -f
 CC	= gcc
 #FLAGS	= -Wall -Wextra -Werror
-FLAGS =  -Lminilibx-linux -lmlx -lX11 -lXext -lm
+FLAGS =  -Lminilibx-linux -lmlx -lX11 -lXext -lm -g3
 
 SRCS = 	main.c \
 		parsing/parsing/parse_map.c \

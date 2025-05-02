@@ -77,6 +77,10 @@ typedef struct s_my_game
 	t_img		*west;
 	t_img		*east;
 
+	//test
+	double	forward_steps;
+	double	right_steps;
+	double	rotation;
 }				t_my_game;
 
 void			map_to_minimap(t_my_game *game, int px, int py);
