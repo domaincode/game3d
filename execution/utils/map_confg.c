@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_wall.c                                       :+:      :+:    :+:   */
+/*   map_confg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbelmajd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:55:50 by kbelmajd          #+#    #+#             */
-/*   Updated: 2025/05/02 12:55:54 by kbelmajd         ###   ########.fr       */
+/*   Created: 2025/05/02 13:13:16 by kbelmajd          #+#    #+#             */
+/*   Updated: 2025/05/02 13:13:21 by kbelmajd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../game.h"
 
-int	check_wall(t_my_game *game, int x, int y)
+void	map_configuration(t_my_game *game, char **data)
 {
-	int	rows;
-	int	cols;
+	int	x;
+	int	y;
 
-	rows = (y / TILE_SIZE);
-	cols = (x / TILE_SIZE);
-	//be carfulel protect ??
-	if (game->map.data[rows][cols] == '1')
-		return (1);
-	return (0);
+	y = 0;
+	game->map.rows = 0;
+	game->map.cols = 0;
+	while (data[y])
+	{
+		x = strlen(data[y]);
+		if (game->map.cols < x)
+			game->map.cols = x;
+		y++;
+	}
+	game->map.rows = y;
+	game->map.x_max = game->map.cols * TILE_SIZE;
+	game->map.y_max = game->map.rows * TILE_SIZE;
 }

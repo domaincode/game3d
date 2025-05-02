@@ -18,7 +18,7 @@ SRCS = 	main.c \
 		parsing/libs/libft/ft_isdigit.c \
 		parsing/libs/libft/ft_strdup.c \
 		parsing/libs/libft/ft_strlen.c \
-		${wildcard execution/*.c execution/basic/*.c execution/utils/*.c}\
+		${wildcard execution/exec/*.c execution/basic/*.c execution/utils/*.c}\
 
 
 
