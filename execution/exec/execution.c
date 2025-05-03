@@ -12,24 +12,24 @@
 
 #include "../game.h"
 
-void	game_key_hook_confg1(t_my_game *game, int x, int y)
+void	game_key_hook_confg1(t_my_game *game, double x, double y)
 {
-	if (!check_wall(game, x, y))
+	if (!check_wall2(game, x, y))
 	{
-		game->player.px = x;
-		game->player.py = y;
+		game->player.px = round(x);
+		game->player.py = round(y);
 	}
-	else if (!check_wall(game, x, game->player.py))
-		game->player.px = x;
-	else if (!check_wall(game, game->player.px, y))
-		game->player.py = y;
+	else if (!check_wall2(game, x, game->player.py))
+		game->player.px = round(x);
+	else if (!check_wall2(game, game->player.px, y))
+		game->player.py = round(y);
 }
 
-void	game_key_hook_confg(t_my_game *game, int f_steps, int r_steps, int rot)
+void	game_key_hook_confg(t_my_game *game, double f_steps, double r_steps, double rot)
 {
 	double	angle;
-	int		x;
-	int		y;
+	double		x;
+	double		y;
 
 	game->player.rot = normalize_angle(game->player.rot + rot * (PI / 180));
 	game->player.ray_angle_start = normalize_angle(game->player.rot
@@ -37,6 +37,7 @@ void	game_key_hook_confg(t_my_game *game, int f_steps, int r_steps, int rot)
 	if (r_steps)
 	{
 		angle = normalize_angle(game->player.rot - (PI / 2));
+		//round
 		x = round(game->player.px + r_steps * cos(angle));
 		y = round(game->player.py + r_steps * sin(angle));
 		game_key_hook_confg1(game, x, y);
@@ -60,35 +61,45 @@ int	draw_to_window(t_my_game *game)
 	return 0;
 }
 
-int	game_key_hook(int keycode, t_my_game *game)
+int	game_key_hook_press(int keycode, t_my_game *game)
 {
-	double	angle;
-	double	rotation;
-	double	forward_steps;
-	double	right_steps;
-
-	rotation = 0;
-	forward_steps = 0;
-	right_steps = 0;
+	game->forward_steps = 0;
+	game->rotation = 0;
+	game->right_steps = 0;
+	//printf("hello from key hook\n");
 	if (keycode == XK_Escape)
 		free_game(game, game->old_game);
 	else if (keycode == XK_a)
-		right_steps = 1.5;
+		game->right_steps = 0.6;
 	else if (keycode == XK_d)
-		right_steps = -1.5;
+		game->right_steps = -0.6;
 	else if (keycode == XK_Left)
-		rotation = -2;
+		game->rotation = -2;
 	else if (keycode == XK_Right)
-		rotation = 2;
+		game->rotation = 2;
 	else if (keycode == XK_s || keycode == XK_Down)
-		forward_steps = -1;
+		game->forward_steps = -0.7;
 	else if (keycode == XK_w || keycode == XK_Up)
-		forward_steps = 1;
-	game->forward_steps = forward_steps;
-	game->rotation = rotation;
-	game->right_steps = right_steps;
-	// game_key_hook_confg(game, forward_steps, right_steps, rotation);
-	// draw_to_window(game);
+		game->forward_steps = 0.7;
+		//draw_to_window(game);
+
+}
+
+int	game_key_hook_release(int keycode, t_my_game *game)
+{
+	if (keycode == XK_a)
+		game->right_steps = 0;
+	else if (keycode == XK_d)
+		game->right_steps = 0;
+	else if (keycode == XK_Left)
+		game->rotation = 0;
+	else if (keycode == XK_Right)
+		game->rotation = 0;
+	else if (keycode == XK_s || keycode == XK_Down)
+		game->forward_steps = 0;
+	else if (keycode == XK_w || keycode == XK_Up)
+		game->forward_steps = 0;
+
 }
 
 void	ft_execution(t_my_game *game)
@@ -96,9 +107,9 @@ void	ft_execution(t_my_game *game)
 	if (cub_init(game))
 		return ;
 	draw_to_window(game);
-	mlx_hook(game->win, 2, KeyPressMask, game_key_hook, game);
+	mlx_key_hook(game->win, game_key_hook_release, game);
+	mlx_hook(game->win, 2, KeyPressMask, game_key_hook_press, game);
 	mlx_loop_hook(game->co, draw_to_window, game);
-	mlx_hook(game->win, 2, KeyPressMask, game_key_hook, game);
 	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, free_game, game);
 	mlx_loop(game->co);
 }

@@ -87,8 +87,6 @@ void			map_to_minimap(t_my_game *game, int px, int py);
 void			draw_line(t_my_game *game, int x_end, int y_end, int color);
 void			draw_square(t_img *image, int posx, int posy, int color);
 void			draw_player(t_img *image, int posx, int posy, int color);
-void			ft_cast(t_my_game *game, int color);
-void			draw_fov(t_my_game *game, int color);
 
 char			*get_next_line(int fd);
 
@@ -101,6 +99,7 @@ int				get_pixel(t_img *image, int x, int y);
 void			my_pixel_put(t_img *image, int x, int y, int color);
 void			set_player_position(t_my_game *game);
 int				check_wall(t_my_game *game, int x, int y);
+int				check_wall2(t_my_game *game, double x, double y);
 void			map_configuration(t_my_game *game, char **data);
 
 int				cub_init(t_my_game *game);
