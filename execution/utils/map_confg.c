@@ -22,7 +22,7 @@ void	map_configuration(t_my_game *game, char **data)
 	game->map.cols = 0;
 	while (data[y])
 	{
-		x = strlen(data[y]);
+		x = ft_strlen(data[y]);
 		if (game->map.cols < x)
 			game->map.cols = x;
 		y++;

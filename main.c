@@ -2,23 +2,6 @@
 // #include "./parsing/includes/cub3d.h"
  //#include "./parsing/includes/utils.h"
 
-void ft_copy(t_my_game* my_game, t_game* game)
-{
-    int b;
-    int c;
-
-    b = c = 1;
-    my_game->old_game = game;
-    my_game->map.data = game->field->map->map;
-    my_game->floor_color = color(game->field->floor.r, game->field->floor.g, game->field->floor.b);
-    my_game->ceiling_color = color(game->field->ceilling.r, game->field->ceilling.g, game->field->ceilling.b);
-    my_game->textures.north = game->field->no_tex.path;
-    my_game->textures.south = game->field->so_tex.path;
-    my_game->textures.west = game->field->we_tex.path;
-    my_game->textures.east = game->field->ea_tex.path;
-
-}
-
 int main(int ac, char **av)
 {
     t_game *game;
@@ -60,8 +43,7 @@ int main(int ac, char **av)
     printf("Ceiling color: %d,%d,%d\n", game->field->ceilling.r, game->field->ceilling.g, game->field->ceilling.b);
    
     
-    ft_copy(&my_game, game);
-    ft_execution(&my_game);
+    ft_execution(&my_game, game);
 
     free(game->field->map);
     free(game->field);

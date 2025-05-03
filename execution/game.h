@@ -110,8 +110,9 @@ double			check_vertical(t_my_game *game, double distance_to_wall,
 
 void			ft_textures(t_my_game *game, int x_start, int texture_x,
 					double projected_height);
-void			ft_execution(t_my_game *game);
+void			ft_execution(t_my_game *game, t_game *old_game);
 void			game_key_hook_confg(t_my_game *game, double f_steps,
 					double r_steps, double rot);
+void			ft_copy(t_my_game *my_game, t_game *game);
 
 #endif

@@ -58,8 +58,9 @@ int	game_key_hook_release(int keycode, t_my_game *game)
 		game->forward_steps = 0;
 }
 
-void	ft_execution(t_my_game *game)
+void	ft_execution(t_my_game *game, t_game *old_game)
 {
+	ft_copy(game, old_game);
 	if (cub_init(game))
 		return ;
 	draw_to_window(game);
