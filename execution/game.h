@@ -18,8 +18,8 @@
 # include "../parsing/includes/parse_map.h"
 # include "../parsing/includes/structs.h"
 
-# define HEIGHT 1200
-# define WIDTH 1600
+# define HEIGHT 800
+# define WIDTH 800
 # define PLAYER_SIZE 8
 # define MAP_SIZE 32
 # define TILE_SIZE 32
@@ -78,9 +78,9 @@ typedef struct s_my_game
 	t_img		*east;
 
 	//test
-	double	forward_steps;
-	double	right_steps;
-	double	rotation;
+	double		forward_steps;
+	double		right_steps;
+	double		rotation;
 }				t_my_game;
 
 void			map_to_minimap(t_my_game *game, int px, int py);
@@ -99,7 +99,6 @@ int				get_pixel(t_img *image, int x, int y);
 void			my_pixel_put(t_img *image, int x, int y, int color);
 void			set_player_position(t_my_game *game);
 int				check_wall(t_my_game *game, int x, int y);
-int				check_wall2(t_my_game *game, double x, double y);
 void			map_configuration(t_my_game *game, char **data);
 
 int				cub_init(t_my_game *game);
@@ -112,5 +111,7 @@ double			check_vertical(t_my_game *game, double distance_to_wall,
 void			ft_textures(t_my_game *game, int x_start, int texture_x,
 					double projected_height);
 void			ft_execution(t_my_game *game);
+void			game_key_hook_confg(t_my_game *game, double f_steps,
+					double r_steps, double rot);
 
 #endif

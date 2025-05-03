@@ -30,7 +30,7 @@ void	draw_map(t_my_game *game)
 				colors = color(255, 255, 255);
 			else if (game->map.data[i][j] == 'd')
 				colors = color(0, 255, 0);
-			draw_square(game->map_img, j * TILE_SIZE, i * TILE_SIZE, colors);
+			draw_square(game->map_img, j * MAP_SIZE, i * MAP_SIZE, colors);
 			j++;
 		}
 		i++;
@@ -47,7 +47,7 @@ void	copy_minimap(t_my_game *game, int x_end, int y_end)
 
 	x = 0;
 	y = 0;
-	y_map = game->player.py - 60;
+	y_map = game->player.py - 40;
 	while (y_map < y_end)
 	{
 		x_map = game->player.px - 60;
@@ -75,6 +75,6 @@ void	map_to_minimap(t_my_game *game, int px, int py)
 	y_end = py + 20 * sin(game->player.rot);
 	draw_line(game, x_end, y_end, 255 << 16);
 	x_end = px + 60;
-	y_end = py + 60;
+	y_end = py + 40;
 	copy_minimap(game, x_end, y_end);
 }

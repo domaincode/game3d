@@ -39,6 +39,9 @@ int	cub_init(t_my_game *game)
 	game->player.ray_angle_start = game->player.rot - (game->player.fov / 2);
 	game->player.fix = TILE_SIZE * (WIDTH / (2 * tan(game->player.fov / 2)));
 	game->player.rays = WIDTH / RES;
+	game->forward_steps = 0;
+	game->rotation = 0;
+	game->right_steps = 0;
 	game->co = mlx_init();
 	if (game->co == NULL)
 		return (1);
