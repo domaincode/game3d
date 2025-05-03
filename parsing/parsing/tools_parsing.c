@@ -58,8 +58,8 @@ int	validate_init_pos(t_map **map)
 		{
 			if (ft_strchr("NEWS", (*map)->map[i][j]))
 			{
-				(*map)->x= j + 1;
-				(*map)->y= i + 1;
+				// (*map)->x= j + 1;
+				// (*map)->y= i + 1;
 				(*map)->direction = (*map)->map[i][j];
 				start_pos += 1;
 
@@ -82,7 +82,7 @@ int	validate_elements(char **map)
 		j = 0;
 		while(map[i][j])
 		{
-			if (!ft_strchr("NEWS01\n", map[i][j]))
+			if (!ft_strchr("NEWS01 \n", map[i][j]))
 				return(0);
 			j++;
 		}
@@ -90,32 +90,63 @@ int	validate_elements(char **map)
 	}
 	return(1);
 }
-
-int	validate_border(char **map)
+int map_height(char **map)
 {
-	int		i;
-	int		j;
-	size_t	len;
+    int height = 0;
 
-	i = 0;
-	j = 0;
-	while (map[0][i] && map[0][i] != '\n')
-	{
-		if (map[0][i++] != '1')
-			return (0);
-	}
-	while ((map[j]))
-	{
-		len = ft_strlen1(map[j]);
-		if (map[j][0] != '1' || map[j][len - 1] != '1')
-			return (0);
-		j++;
-	}
-	i = 0;
-	while (map[j - 1][i])
-	{
-		if (map[j - 1][i++] != '1')
-			return (0);
-	}
-	return (1);
+    while (map[height] != NULL)
+        height++;
+    return height;
+}
+
+int validate_border(char **map)
+{
+    int i = 0;
+    int j;
+
+    // Vérifiez la première et la dernière ligne
+    while (map[0][i] != '\0')
+    {
+        if (map[0][i] != '1' && map[0][i] != ' ')
+        {
+            printf("Error: The map is not enclosed. Top row is invalid at column %d.\n", i);
+            return (0);
+        }
+        i++;
+    }
+
+    i = 0;
+    while (map[map_height(map) - 1][i] != '\0')
+    {
+        if (map[map_height(map) - 1][i] != '1' && map[map_height(map) - 1][i] != ' ')
+        {
+            printf("Error: The map is not enclosed. Bottom row is invalid at column %d.\n", i);
+            return (0);
+        }
+        i++;
+    }
+
+    // Vérifiez les bords gauche et droit de chaque ligne
+    for (i = 0; map[i] != NULL; i++)
+    {
+        j = 0;
+        while (map[i][j] == ' ') // Ignorez les espaces au début
+            j++;
+        if (map[i][j] != '1')
+        {
+            printf("Error: The map is not enclosed. Left border is invalid at row %d.\n", i);
+            return (0);
+        }
+
+        j = strlen(map[i]) - 1;
+        while (j >= 0 && map[i][j] == ' ') // Ignorez les espaces à la fin
+            j--;
+        if (map[i][j] != '1')
+        {
+            printf("Error: The map is not enclosed. Right border is invalid at row %d.\n", i);
+            return (0);
+        }
+    }
+
+    return (1);
 }

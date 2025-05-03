@@ -40,6 +40,7 @@ int	game_key_hook_press(int keycode, t_my_game *game)
 		game->forward_steps = -1.5;
 	else if (keycode == XK_w || keycode == XK_Up)
 		game->forward_steps = 1.5;
+	return 0;
 }
 
 int	game_key_hook_release(int keycode, t_my_game *game)
@@ -56,6 +57,7 @@ int	game_key_hook_release(int keycode, t_my_game *game)
 		game->forward_steps = 0;
 	else if (keycode == XK_w || keycode == XK_Up)
 		game->forward_steps = 0;
+	return 0;
 }
 
 void	ft_execution(t_my_game *game, t_game *old_game)

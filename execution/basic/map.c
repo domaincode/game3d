@@ -28,8 +28,6 @@ void	draw_map(t_my_game *game)
 				colors = color(0, 0, 0);
 			else if (game->map.data[i][j])
 				colors = color(255, 255, 255);
-			else if (game->map.data[i][j] == 'd')
-				colors = color(0, 255, 0);
 			draw_square(game->map_img, j * MAP_SIZE, i * MAP_SIZE, colors);
 			j++;
 		}
@@ -71,8 +69,8 @@ void	map_to_minimap(t_my_game *game, int px, int py)
 
 	draw_map(game);
 	draw_player(game->map_img, px, py, 255);
-	x_end = px + 20 * cos(game->player.rot);
-	y_end = py + 20 * sin(game->player.rot);
+	x_end = round(px + 20 * cos(game->player.rot));
+	y_end = round(py + 20 * sin(game->player.rot));
 	draw_line(game, x_end, y_end, 255 << 16);
 	x_end = px + 60;
 	y_end = py + 40;

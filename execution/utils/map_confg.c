@@ -18,9 +18,10 @@ void	map_configuration(t_my_game *game, char **data)
 	int	y;
 
 	y = 0;
+	x = 0;
 	game->map.rows = 0;
 	game->map.cols = 0;
-	while (data[y])
+	while (data[y] != NULL)
 	{
 		x = ft_strlen(data[y]);
 		if (game->map.cols < x)

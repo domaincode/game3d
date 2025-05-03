@@ -14,9 +14,7 @@
 
 int	free_game(t_my_game *game, t_game *old_game)
 {
-	int	i;
-
-	i = 0;
+	(void)old_game;
 	mlx_destroy_image(game->co, game->img);
 	mlx_destroy_image(game->co, game->map_img);
 	mlx_destroy_image(game->co, game->north);

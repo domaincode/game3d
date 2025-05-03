@@ -44,28 +44,36 @@ void	validate_color(t_color *color, char *element_name)
 	}
 }
 
-void	validate_map(t_map *map)
+void validate_map(t_map *map)
 {
-	if (map->map == NULL)
-	{
-		printf("Error: The map is missing.\n");
-		exit(1);
-	}
-	else if(!validate_elements(map->map))
-	{
-		printf("Error: A not allowed element exists.\n");
-		exit(1);
-	}
-	else if (!validate_border(map->map))
-	{
-		printf("Error: The map is not enclosed.\n");
-		exit(1);
-	}
-	else if (!validate_init_pos(&map))
-	{
-		printf("Error: The map has 0 or more than 1 start position.\n");
-		exit(1);
-	}
+    if (map->map == NULL)
+    {
+        printf("Error: The map is missing.\n");
+        exit(1);
+    }
+    
+    // Debugging: Print map lines to ensure map is correctly loaded
+    printf("DEBUG: Map content:\n");
+    for (int i = 0; map->map[i] != NULL; i++)
+    {
+        printf("%s", map->map[i]);
+    }
+
+    if (!validate_elements(map->map))
+    {
+        printf("Error: A not allowed element exists.\n");
+        exit(1);
+    }
+    else if (!validate_border(map->map))
+    {
+        printf("Error: The map is not enclosed.\n");
+        exit(1);
+    }
+    else if (!validate_init_pos(&map))
+    {
+        printf("Error: The map has 0 or more than 1 start position.\n");
+        exit(1);
+    }
 }
 
 void	validate_field(t_field *field)
@@ -76,7 +84,7 @@ void	validate_field(t_field *field)
 	validate_texture(field->ea_tex.path, "EA texture");
 	validate_color(&field->floor, "floor color");
 	validate_color(&field->ceilling, "ceilling color");
-	validate_map(field->map);
+	//validate_map(field->map);
 	
 }
 

@@ -2,6 +2,26 @@
 #include "../includes/parse_map.h"
 #include "../libs/libft/libft.h"
 
+void allocate_map(t_map *map, int height, int width)
+{
+    map->map = malloc(sizeof(char *) * (height + 1));
+    if (!map->map)
+    {
+        printf("Error: Memory allocation failed for map->map.\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < height; i++)
+    {
+        map->map[i] = malloc(sizeof(char) * (width + 1));
+        if (!map->map[i])
+        {
+            printf("Error: Memory allocation failed for map->map[%d].\n", i);
+            exit(1);
+        }
+    }
+    map->map[height] = NULL; // Terminez le tableau avec NULL
+}
 void	parse_texture(char *line, t_texture *tex)
 {
 	line += 2;
@@ -85,6 +105,7 @@ void	parse_field(int fd, t_field **field)
 	parse_resolution(field, (*field)->map);
 	free(line);
 }
+
 int	is_map(char *line)
 {
 	while (*line == ' ')
@@ -104,7 +125,7 @@ int	is_map(char *line)
 		return (1);
 }
 
-int	height_map(int fd)
+int height_map(int fd)
 {
     char *line;
     int height = 0;
@@ -115,11 +136,10 @@ int	height_map(int fd)
             height++;
         free(line);
     }
-	lseek(fd, 0, SEEK_SET);
-	if (fd < 0)
+    if (lseek(fd, 0, SEEK_SET) < 0)
     {
-        perror("Error: Failed to reopen file");
-        exit(EXIT_FAILURE);
+        perror("Error: Failed to reset file descriptor");
+        exit(1);
     }
     return height;
 }
@@ -129,33 +149,31 @@ char	*cpy_map(char *line)
 	return(ft_strdup(line));
 }
 
-size_t	get_width(int fd, char *line)
+size_t get_width(int fd, char *line)
 {
-	size_t	max_length;
-	size_t	length;
-	int		i;
+    size_t max_length = 0;
+    size_t length;
+    int i;
 
-	max_length = 0;
-	while (line)
-	{
-		length = 0;
-		i = 0;
-		while (line[i])
-		{
+    while (line)
+    {
+        length = 0;
+        i = 0;
+        while (line[i])
+        {
             length++;
             i++;
-		}
-		if (length > max_length)
-			max_length = length;
-		line = get_next_line(fd);
-	}
-    lseek(fd, 0, SEEK_SET);
-	if (fd < 0)
+        }
+        if (length > max_length)
+            max_length = length;
+        line = get_next_line(fd);
+    }
+    if (lseek(fd, 0, SEEK_SET) < 0)
     {
-        perror("Error: Failed to reopen file");
+        perror("Error: Failed to reset file descriptor");
         exit(EXIT_FAILURE);
     }
-	return (max_length);
+    return max_length;
 }
 
 void	parse_map(int fd, char *line, t_map *map, int i, int height)
@@ -164,13 +182,14 @@ void	parse_map(int fd, char *line, t_map *map, int i, int height)
     {
         map->height = height;
         map->width = get_width(fd, line);
-        map->map = malloc(sizeof(char *) * (map->height + 1));
+        map->map = malloc(sizeof(char *) * (map->height + 2));
         if (!map->map)
         {
-            perror("Error: malloc failed");
+            perror("malloc failed");
             exit(EXIT_FAILURE);
         }
 		  map->map[map->height] = NULL;
     }
     map->map[i] = cpy_map(line);
+    printf("Parsing map line: %s\n", line);
 }

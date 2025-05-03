@@ -1,12 +1,11 @@
 #include "./execution/game.h"
-// #include "./parsing/includes/cub3d.h"
- //#include "./parsing/includes/utils.h"
+#include "./parsing/includes/cub3d.h"
+ #include "./parsing/includes/utils.h"
 
 int main(int ac, char **av)
 {
     t_game *game;
     t_my_game my_game;
-    int b;
     int fd;
 
     if (ac != 2)

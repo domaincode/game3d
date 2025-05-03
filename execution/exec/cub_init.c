@@ -23,7 +23,7 @@ int	cub_confg(t_my_game *game)
 	game->south = mlx_xpm_file_to_image(game->co, game->textures.south, &i, &i);
 	game->west = mlx_xpm_file_to_image(game->co, game->textures.west, &i, &i);
 	game->east = mlx_xpm_file_to_image(game->co, game->textures.east, &i, &i);
-	if (!game->north || !game->south | !game->west || !game->east || !game->img,
+	if (!game->north || !game->south | !game->west || !game->east || !game->img ||
 		!game->map_img)
 		return (1);
 	return (0);
@@ -31,8 +31,6 @@ int	cub_confg(t_my_game *game)
 
 int	cub_init(t_my_game *game)
 {
-	int	i;
-
 	set_player_position(game);
 	map_configuration(game, game->map.data);
 	game->player.fov = 60 * (PI / 180);
