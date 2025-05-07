@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <string.h>
 #include "utils.h"
+#include "stdbool.h"
+#include "structs.h"
 
 
 void parse_field(int fd, t_field **field);
@@ -19,4 +21,5 @@ size_t	get_width(int fd, char *line);
 void	parse_map(int fd, char *line, t_map *map, int i, int height);
 void skip_chars(char **line);
 void clean_spaces(char *line);
+
 #endif

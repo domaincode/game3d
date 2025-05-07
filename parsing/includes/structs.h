@@ -32,7 +32,7 @@ typedef struct s_resolution
 typedef struct s_texture
 {
 	char		*path;
-	//t_img		img;
+	t_img		img;
 	int			width;
 	int			height;
 }				t_texture;
@@ -70,5 +70,7 @@ typedef struct s_game
 {
 	t_field		*field;
 }	t_game;
+
+void free_all(t_field *field, t_map *map);
 
 #endif

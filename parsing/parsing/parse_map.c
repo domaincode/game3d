@@ -11,7 +11,8 @@ void allocate_map(t_map *map, int height, int width)
         exit(1);
     }
 
-    for (int i = 0; i < height; i++)
+    int i = 0;
+    while (i < height)
     {
         map->map[i] = malloc(sizeof(char) * (width + 1));
         if (!map->map[i])
@@ -19,8 +20,9 @@ void allocate_map(t_map *map, int height, int width)
             printf("Error: Memory allocation failed for map->map[%d].\n", i);
             exit(1);
         }
+        i++;
     }
-    map->map[height] = NULL; // Terminez le tableau avec NULL
+    map->map[height] = NULL; 
 }
 void	parse_texture(char *line, t_texture *tex)
 {
@@ -136,11 +138,15 @@ int height_map(int fd)
             height++;
         free(line);
     }
-    if (lseek(fd, 0, SEEK_SET) < 0)
+
+    close(fd);
+    fd = open("map.cub", O_RDONLY);
+    if (fd < 0)
     {
-        perror("Error: Failed to reset file descriptor");
+        perror("Error: Failed to reopen file");
         exit(1);
     }
+
     return height;
 }
 
@@ -166,30 +172,32 @@ size_t get_width(int fd, char *line)
         }
         if (length > max_length)
             max_length = length;
+        //free(line);
         line = get_next_line(fd);
     }
-    if (lseek(fd, 0, SEEK_SET) < 0)
+
+    
+    close(fd);
+    fd = open("map.cub", O_RDONLY);
+    if (fd < 0)
     {
-        perror("Error: Failed to reset file descriptor");
+        perror("Error: Failed to reopen file");
         exit(EXIT_FAILURE);
     }
+
     return max_length;
 }
 
-void	parse_map(int fd, char *line, t_map *map, int i, int height)
+void parse_map(int fd, char *line, t_map *map, int i, int height)
 {
-	if (i == 0)
+    if (i == 0)
     {
         map->height = height;
         map->width = get_width(fd, line);
-        map->map = malloc(sizeof(char *) * (map->height + 2));
-        if (!map->map)
-        {
-            perror("malloc failed");
-            exit(EXIT_FAILURE);
-        }
-		  map->map[map->height] = NULL;
+        allocate_map(map, map->height, map->width); 
     }
+
+    clean_spaces(line);
     map->map[i] = cpy_map(line);
-    printf("Parsing map line: %s\n", line);
+    //printf("Parsing map line: %s\n", line);
 }

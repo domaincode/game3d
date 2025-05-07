@@ -58,8 +58,8 @@ int	validate_init_pos(t_map **map)
 		{
 			if (ft_strchr("NEWS", (*map)->map[i][j]))
 			{
-				// (*map)->x= j + 1;
-				// (*map)->y= i + 1;
+				(*map)->x= j + 1;
+				(*map)->y= i + 1;
 				(*map)->direction = (*map)->map[i][j];
 				start_pos += 1;
 
@@ -104,7 +104,6 @@ int validate_border(char **map)
     int i = 0;
     int j;
 
-    // Vérifiez la première et la dernière ligne
     while (map[0][i] != '\0')
     {
         if (map[0][i] != '1' && map[0][i] != ' ')
@@ -126,11 +125,11 @@ int validate_border(char **map)
         i++;
     }
 
-    // Vérifiez les bords gauche et droit de chaque ligne
-    for (i = 0; map[i] != NULL; i++)
+    i = 0;
+    while (map[i] != NULL)
     {
         j = 0;
-        while (map[i][j] == ' ') // Ignorez les espaces au début
+        while (map[i][j] == ' ')
             j++;
         if (map[i][j] != '1')
         {
@@ -139,13 +138,15 @@ int validate_border(char **map)
         }
 
         j = strlen(map[i]) - 1;
-        while (j >= 0 && map[i][j] == ' ') // Ignorez les espaces à la fin
+        while (j >= 0 && map[i][j] == ' ')
             j--;
         if (map[i][j] != '1')
         {
             printf("Error: The map is not enclosed. Right border is invalid at row %d.\n", i);
             return (0);
         }
+
+        i++;
     }
 
     return (1);

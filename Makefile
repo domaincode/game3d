@@ -5,6 +5,7 @@ CC	= gcc
 FLAGS =  -Wall -Wextra -Werror -Lminilibx-linux -lmlx -lX11 -lXext -lm
 
 SRCS = 	main.c \
+		parsing/parsing/free_all.c\
 		parsing/parsing/parse_map.c \
 		parsing/parsing/tools_parsing.c \
 		parsing/parsing/validate_map.c \
