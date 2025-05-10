@@ -12,10 +12,10 @@
 
 #include "../game.h"
 
-int	free_game(t_my_game *game, t_game *old_game)
+int	free_game(t_my_game *game, t_directions *direction)
 {
-	(void)old_game;
-	free_all(old_game->field, old_game->field->map);
+	(void)direction;
+	//free_all(old_game->field, old_game->field->map);
 	mlx_destroy_image(game->co, game->img);
 	mlx_destroy_image(game->co, game->map_img);
 	mlx_destroy_image(game->co, game->north);

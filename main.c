@@ -1,53 +1,127 @@
+
 #include "./execution/game.h"
-#include "./parsing/includes/cub3d.h"
- #include "./parsing/includes/utils.h"
+//#include "parsing/parsing.h"
 
-int main(int ac, char **av)
+void cleanup(t_map *map)
 {
-    t_game *game;
-    t_my_game my_game;
-    int fd;
+    int i;
 
-    if (ac != 2)
+    // Free each texture map
+    // for (i = 0; i < 5; i++)
+    // {
+    //     if (map->textures[i].map)
+    //     {
+    //         free(map->textures[i].map);
+    //         map->textures[i].map = NULL; 
+    //     }
+    // }
+
+    // Free the directions
+    // if (map->directions)
+    // {
+    //     if (map->directions->no)
+    //     {
+    //         free(map->directions->no);
+    //         map->directions->no = NULL;
+    //     }
+    //     if (map->directions->so)
+    //     {
+    //         free(map->directions->so);
+    //         map->directions->so = NULL;
+    //     }
+    //     if (map->directions->we)
+    //     {
+    //         free(map->directions->we);
+    //         map->directions->we = NULL;
+    //     }
+    //     if (map->directions->ea)
+    //     {
+    //         free(map->directions->ea);
+    //         map->directions->ea = NULL;
+    //     }
+
+    //     // Free the directions structure itself (only if dynamically allocated)
+    //     free(map->directions);
+    //     map->directions = NULL;
+    // }
+
+    // Free the map array
+    if (map->map)
     {
-        printf("Please provide a map!");
-        return (1);
+        for (i = 0; map->map[i]; i++)
+        {
+            free(map->map[i]);
+            map->map[i] = NULL;
+        }
+        free(map->map);
+        map->map = NULL;
     }
-    fd = open(av[1], O_RDONLY);
-    if (fd == -1)
+
+    write(1, "Cleanup completed.\n", 19);
+}
+
+void print_debug_info(t_map *map)
+{
+    int i;
+
+    printf("Map:\n");
+    if (map->map)
     {
-        printf("Error\n Failed to open file %s.\n", av[1]);
-        exit(1);
+        for (i = 0; map->map[i]; i++)
+            printf("%s\n", map->map[i]);
     }
-    check_errors(av[1], fd);
-    game = malloc(sizeof(t_game));
-    if (!game)
+    else
     {
-    printf("Error: Memory allocation failed for game.\n");
-    exit(1);
+        printf("Map is NULL.\n");
     }
-    game->field = malloc(sizeof(t_field));
-    game->field->map = malloc(sizeof(t_map));
-    init_field(&(game->field));
-    parse_field(fd, &game->field);
-    validate_field(game->field);
 
-    printf("Parsing completed successfully!\n");
-    printf("Field data:\n");
-    printf("North texture: %s\n", game->field->no_tex.path);
-    printf("South texture: %s\n", game->field->so_tex.path);
-    printf("West texture: %s\n", game->field->we_tex.path);
-    printf("East texture: %s\n", game->field->ea_tex.path);
-    printf("Floor color: %d,%d,%d\n", game->field->floor.r, game->field->floor.g, game->field->floor.b);
-    printf("Ceiling color: %d,%d,%d\n", game->field->ceilling.r, game->field->ceilling.g, game->field->ceilling.b);
-   
-    
-    ft_execution(&my_game, game);
+    printf("\nTextures:\n");
+    if (map->directions)
+    {
+        printf("NO: %s\n", map->directions->no ? map->directions->no : "NULL");
+        printf("SO: %s\n", map->directions->so ? map->directions->so : "NULL");
+        printf("WE: %s\n", map->directions->we ? map->directions->we : "NULL");
+        printf("EA: %s\n", map->directions->ea ? map->directions->ea : "NULL");
+    }
+    else
+    {
+        printf("Directions are NULL.\n");
+    }
 
-    free(game->field->map);
-    free(game->field);
-    free(game);
+    printf("\nColors:\n");
+    if (map->directions)
+    {
+        printf("Floor (F): %lld\n", map->directions->f);
+        printf("Ceiling (C): %lld\n", map->directions->c);
+    }
+    else
+    {
+        printf("Directions are NULL.\n");
+    }
+}
 
-    close(fd);
-    return (0);
+
+
+int	main(int ac, char **av)
+{
+    t_my_game game;
+	int				i;
+	t_map			map;
+	t_directions	directions;
+	t_textures		textures[5];
+
+	i = 5;
+	if (ac != 2)
+		put_error("INVALID NUMBER OF ARGUMENTS");
+	while (i--)
+		textures[i].map = &map;
+	map.textures = textures;
+	directions.map = &map;
+	map.directions = &directions;
+	parsing(&map, av);
+	print_debug_info(&map);
+    ft_execution(&game, &directions);
+	//cleanup(&map);
+    //free_map(map);
+    return 0;
 }

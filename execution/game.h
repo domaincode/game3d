@@ -15,8 +15,7 @@
 
 # include "../minilibx-linux/mlx.h"
 # include "../minilibx-linux/mlx_int.h"
-# include "../parsing/includes/parse_map.h"
-# include "../parsing/includes/structs.h"
+#include "../parsing/parsing/parsing.h"
 
 # define HEIGHT 800
 # define WIDTH 800
@@ -58,7 +57,7 @@ typedef struct s_player
 
 typedef struct s_my_game
 {
-	t_game		*old_game;
+	t_directions		*direction;
 	t_xvar		*co;
 	t_win_list	*win;
 	t_player	player;
@@ -88,12 +87,10 @@ void			draw_line(t_my_game *game, int x_end, int y_end, int color);
 void			draw_square(t_img *image, int posx, int posy, int color);
 void			draw_player(t_img *image, int posx, int posy, int color);
 
-char			*get_next_line(int fd);
-
 void			map_configuration(t_my_game *game, char **data);
 double			normalize_angle(double angle);
 
-int				free_game(t_my_game *game, t_game *old_game);
+int				free_game(t_my_game *game, t_directions	*direction);
 int				color(int r, int g, int b);
 int				get_pixel(t_img *image, int x, int y);
 void			my_pixel_put(t_img *image, int x, int y, int color);
@@ -110,9 +107,9 @@ double			check_vertical(t_my_game *game, double distance_to_wall,
 
 void			ft_textures(t_my_game *game, int x_start, int texture_x,
 					double projected_height);
-void			ft_execution(t_my_game *game, t_game *old_game);
+void			ft_execution(t_my_game *game, t_directions	*direction);
 void			game_key_hook_confg(t_my_game *game, double f_steps,
 					double r_steps, double rot);
-void			ft_copy(t_my_game *my_game, t_game *game);
+void			ft_copy(t_my_game *my_game, t_directions *direction);
 
 #endif

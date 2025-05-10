@@ -44,6 +44,7 @@ void	check_intersections(t_my_game *game)
 	distance = -1;
 	angle_increment = game->player.fov / game->player.rays;
 	game->player.ray_angle = game->player.ray_angle_start;
+	//printf("rays:%d\n", game->player.rays);
 	while (i < game->player.rays)
 	{
 		distance = check_horizontal(game, distance, &texture_x, &indice);

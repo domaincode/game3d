@@ -36,7 +36,7 @@ void	game_key_hook_confg(t_my_game *game, double f_steps, double r_steps,
 		x = round(game->player.px + r_steps * cos(angle));
 		y = round(game->player.py + r_steps * sin(angle));
 	}
-	else
+	if(f_steps)
 	{
 		x = round(game->player.px + f_steps * cos(game->player.rot));
 		y = round(game->player.py + f_steps * sin(game->player.rot));

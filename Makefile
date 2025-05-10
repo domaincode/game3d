@@ -1,40 +1,44 @@
 NAME = cub3D
-RM	= rm -f
-CC	= gcc
-#FLAGS	= -Wall -Wextra -Werror
-FLAGS =  -Wall -Wextra -Werror -Lminilibx-linux -lmlx -lX11 -lXext -lm
+CC = cc
+DFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Lminilibx-linux -lmlx -lX11 -lXext -lm
+LIBFT_DIR = parsing/external_outils/libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-SRCS = 	main.c \
-		parsing/parsing/free_all.c\
-		parsing/parsing/parse_map.c \
-		parsing/parsing/tools_parsing.c \
-		parsing/parsing/validate_map.c \
-		parsing/utils/get_next_line_utils.c \
-		parsing/utils/get_next_line.c \
-		parsing/utils/utils.c \
-		parsing/libs/libft/ft_memset.c \
-		parsing/libs/libft/ft_strcmp.c \
-		parsing/libs/libft/ft_strncmp.c \
-		parsing/libs/libft/ft_atoi.c \
-		parsing/libs/libft/ft_isdigit.c \
-		parsing/libs/libft/ft_strdup.c \
-		parsing/libs/libft/ft_strlen.c \
+P_SRCS = main.c \
+		parsing/parsing/cardinal_directions2.c \
+		parsing/parsing/cardinal_directions.c \
+		parsing/parsing/player_position.c \
+		parsing/parsing/map_dimension.c \
+		parsing/parsing/map_parsing.c \
+		parsing/parsing/read_map.c \
+		parsing/parsing/parsing.c \
+		parsing/parsing/rgb_parse.c \
+		parsing/parsing/tools.c \
+		parsing/parsing/tools2.c \
 		${wildcard execution/exec/*.c execution/basic/*.c execution/utils/*.c}\
 
+O_SRCS = parsing/external_outils/get_next_line/get_next_line.c \
+		 parsing/external_outils/get_next_line/get_next_line_utils.c
 
+SRCS = $(P_SRCS) $(O_SRCS)
+OBJS = $(SRCS:.c=.o)
 
-OBJ  = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-%.o: %.c
-	$(CC) -c $<  $(FLAGS) -o $@
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC)  $(OBJS) $(CFLAGS) $(LIBFT) -o $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) $(FLAGS) -o $(NAME)
+$(LIBFT):
+	make -C $(LIBFT_DIR)
+
+
+%.o: %.c
+	$(CC) $(DFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJS)
 
 fclean: clean
 	$(RM) $(NAME)

@@ -27,7 +27,7 @@ int	draw_to_window(t_my_game *game)
 int	game_key_hook_press(int keycode, t_my_game *game)
 {
 	if (keycode == XK_Escape)
-		free_game(game, game->old_game);
+		free_game(game, game->direction);
 	else if (keycode == XK_a)
 		game->right_steps = -1.5;
 	else if (keycode == XK_d)
@@ -60,9 +60,9 @@ int	game_key_hook_release(int keycode, t_my_game *game)
 	return 0;
 }
 
-void	ft_execution(t_my_game *game, t_game *old_game)
+void	ft_execution(t_my_game *game, t_directions	*direction)
 {
-	ft_copy(game, old_game);
+	ft_copy(game, direction);
 	if (cub_init(game))
 		return ;
 	draw_to_window(game);

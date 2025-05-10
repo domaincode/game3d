@@ -14,8 +14,8 @@
 
 void	set_player_position1(t_my_game *game, int x, int y)
 {
-	game->player.px = x * TILE_SIZE;
-	game->player.py = y * TILE_SIZE;
+	game->player.px = x * TILE_SIZE + 0.5 * TILE_SIZE;
+	game->player.py = y * TILE_SIZE + 0.5 * TILE_SIZE;
 	if (game->map.data[y][x] == 'N')
 		game->player.rot = 270 * (PI / 180);
 	else if (game->map.data[y][x] == 'S')
@@ -37,7 +37,7 @@ void	set_player_position(t_my_game *game)
 		x = 0;
 		while (game->map.data[y][x])
 		{
-			if (game->map.data[y][x] != '0' && game->map.data[y][x] != '1')
+			if (game->map.data[y][x] != '0' && game->map.data[y][x] != '1' && game->map.data[y][x] != ' ')
 			{
 				set_player_position1(game, x, y);
 				return ;

@@ -12,11 +12,11 @@
 
 #include "../game.h"
 
-double	normalize_angle(double angle)
+double normalize_angle(double angle)
 {
+	if (angle < 0)
+		angle += 2 * PI;
 	if (angle > 2 * PI)
-		return (angle - 2 * PI);
-	else if (angle <= 0)
-		return (angle + 2 * PI);
-	return (angle);
+		angle -= 2 * PI;
+	return angle;
 }

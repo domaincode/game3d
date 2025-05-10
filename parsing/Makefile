@@ -1,37 +1,51 @@
 NAME = cub3D
-RM	= rm -f
-CC	= gcc
-FLAGS	= -Wall -Wextra -Werror
+CC = cc
+DFLAGS = -Wall -Werror -Wextra -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Lminilibx-linux -lmlx -lX11 -lXext -lm
+LIBFT_DIR = external_outils/libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-SRCS = 	parsing/main.c \
-		parsing/parse_map.c \
-		parsing/tools_parsing.c \
-		parsing/validate_map.c \
-		utils/get_next_line_utils.c \
-		utils/get_next_line.c \
-		utils/utils.c \
-		libs/libft/ft_memset.c \
-		libs/libft/ft_strcmp.c \
-		libs/libft/ft_strncmp.c \
-		libs/libft/ft_atoi.c \
-		libs/libft/ft_isdigit.c \
-		libs/libft/ft_strdup.c \
-		libs/libft/ft_strlen.c
+P_SRCS = main.c \
+		parsing/parsing/cardinal_directions2.c \
+		parsing/parsing/cardinal_directions.c \
+		parsing/parsing/player_position.c \
+		parsing/parsing/map_dimension.c \
+		parsing/parsing/map_parsing.c \
+		parsing/parsing/read_map.c \
+		parsing/parsing/parsing.c \
+		parsing/parsing/rgb_parse.c \
+		parsing/parsing/tools.c \
+		parsing/parsing/tools2.c \
+		${wildcard execution/exec/*.c execution/basic/*.c execution/utils/*.c}\
 
-OBJ  = $(SRCS:.c=.o)
+O_SRCS = external_outils/get_next_line/get_next_line.c \
+		 external_outils/get_next_line/get_next_line_utils.c
+
+SRCS = $(P_SRCS) $(O_SRCS)
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC)  $(OBJS) $(CFLAGS) $(LIBFT) -o $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME)
+$(LIBFT):
+	make -C $(LIBFT_DIR)
+
+%.o: %.c
+	$(CC) -c $< $(CFLAGS) -o $@
 
 clean:
-	$(RM) $(OBJ)
+	rm -rf $(OBJS)
+	make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -rf $(NAME)
+	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
+
+push:
+	git add .
+	git commit -m "cube"
+	git push
